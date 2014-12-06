@@ -1,0 +1,17 @@
+box: wercker-labs/docker
+build:
+  steps:
+    # install ruby for the pretty-slack-notify step.
+    - install-packages:
+        packages: ruby
+    - script:
+        name: build image
+        code: |
+          sudo docker build --tag bcclaywell/pplacer-builder:latest .
+    - script:
+        name: build application
+        code: |
+          sudo docker run --tty -v $WERCKER_OUTPUT_DIR:/home/builder/pplacer/bin bcclaywell/pplacer-builder:latest make
+  after-steps:
+    - wantedly/pretty-slack-notify:
+        webhook_url: $SLACK_WEBHOOK_URL

@@ -58,8 +58,5 @@ RUN cat opam-requirements.txt | xargs opam install -y
 # Install the run script.
 ADD docker-entrypoint.sh /docker-entrypoint
 
-# Export the build output directory.
-VOLUME /home/builder/pplacer/bin
-
 ENTRYPOINT ["/docker-entrypoint"]
 CMD ["/docker-entrypoint", "/usr/bin/make"]

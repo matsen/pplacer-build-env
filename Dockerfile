@@ -29,12 +29,6 @@ RUN apt-get update -q && \
     git && \
     apt-get clean -q
 
-RUN useradd -m -d /home/builder -p builder builder
-
-WORKDIR /home/builder
-USER builder
-ENV HOME /home/builder
-
 # Initialize opam.
 RUN opam init && \
     opam config setup -a
@@ -50,7 +44,7 @@ RUN opam repo add pplacer-deps http://matsen.github.com/pplacer-opam-repository 
 
 # Clone the pplacer repository.
 RUN git clone git://github.com/matsen/pplacer
-WORKDIR /home/builder/pplacer
+WORKDIR /pplacer
 
 # Install pplacer's dependencies.
 RUN cat opam-requirements.txt | xargs opam install -y

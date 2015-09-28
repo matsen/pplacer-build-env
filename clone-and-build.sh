@@ -1,9 +1,14 @@
 #!/bin/sh
 
+BRANCH=travis
+
+set -eu
+
 eval `opam config env`
 
-git clone git@github.com:matsen/pplacer.git /build
-cd /build
+curl -LOk https://github.com/matsen/pplacer/archive/$BRANCH.zip
+unzip $BRANCH.zip
+cd pplacer-$BRANCH
 make test
 make zip
 cp pplacer-linux.zip /export

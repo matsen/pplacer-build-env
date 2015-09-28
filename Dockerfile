@@ -28,6 +28,7 @@ RUN apt-get update -q && \
     ocaml \
     opam \
     patch \
+    unzip \
     zip \
     && apt-get clean -q
 

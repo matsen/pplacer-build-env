@@ -8,4 +8,4 @@ make test
 make zip
 cp pplacer-linux.zip /export
 
-exec $@
+echo "ALL DONE"

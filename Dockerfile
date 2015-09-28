@@ -48,5 +48,5 @@ RUN opam repo add pplacer-deps http://matsen.github.com/pplacer-opam-repository 
 RUN curl -k https://raw.githubusercontent.com/matsen/pplacer/master/opam-requirements.txt | xargs opam install -y
 
 # Install the entrypoint script.
-ADD docker-entrypoint.sh /docker-entrypoint
-ENTRYPOINT ["/docker-entrypoint"]
+ADD clone-and-build.sh /clone-and-build.sh
+CMD ["/clone-and-build.sh"]

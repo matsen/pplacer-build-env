@@ -17,7 +17,9 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 RUN apt-get update -q && \
     apt-get install -y -q --no-install-recommends \
     camlp4-extra \
+    curl \
     gawk \
+    git \
     libgsl0-dev \
     libsqlite3-dev \
     libz-dev \
@@ -26,8 +28,8 @@ RUN apt-get update -q && \
     ocaml \
     opam \
     patch \
-    git && \
-    apt-get clean -q
+    zip \
+    && apt-get clean -q
 
 # Initialize opam.
 RUN opam init && \
@@ -42,15 +44,9 @@ RUN command -v ocamlc && \
 RUN opam repo add pplacer-deps http://matsen.github.com/pplacer-opam-repository && \
     opam update pplacer-deps
 
-# Clone the pplacer repository.
-RUN git clone git://github.com/matsen/pplacer
-WORKDIR /pplacer
-
 # Install pplacer's dependencies.
-RUN cat opam-requirements.txt | xargs opam install -y
+RUN curl -k https://raw.githubusercontent.com/matsen/pplacer/master/opam-requirements.txt | xargs opam install -y
 
-# Install the run script.
+# Install the entrypoint script.
 ADD docker-entrypoint.sh /docker-entrypoint
-
 ENTRYPOINT ["/docker-entrypoint"]
-CMD ["/docker-entrypoint", "/usr/bin/make"]

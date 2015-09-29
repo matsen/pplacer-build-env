@@ -28,9 +28,13 @@ RUN apt-get update -q && \
     ocaml \
     opam \
     patch \
+    python-pip \
     unzip \
     zip \
     && apt-get clean -q
+
+# Sphinx for `make docs`.
+RUN pip install sphinx
 
 # Initialize opam.
 RUN opam init && \
